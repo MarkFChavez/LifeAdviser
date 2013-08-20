@@ -1,0 +1,15 @@
+module ApplicationHelper
+	def title(page_title)
+		content_for :title do
+			if page_title
+				"Life Adviser | #{page_title}"
+			else
+				"Life Adviser"
+			end
+		end
+	end
+
+	def g(user, klazz, options={})
+		gravatar_image_tag(user.email, title:user.email, class:klazz, gravatar: options)
+	end
+end

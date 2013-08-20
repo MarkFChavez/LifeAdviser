@@ -1,0 +1,69 @@
+<%= title('Dashboard') %>
+
+<div class="row-fluid">
+	<div class="span3">
+		<div id="profile-block" style="text-align:center">
+			<%= g(current_user, 'img-circle', size:160) %>
+			<div style="margin-top:20px">
+				<span> So, you are <%= current_user.email %> </span>, 
+				<%= link_to "Logout", destroy_user_session_path, method: :delete %>
+			</div>
+		</div>
+	</div>
+
+	<div class="span6">
+		<p class="lead"> You need help with the ff. </p>
+
+		<div style="margin-top:20px">
+			<% if !@my_advices.empty? %>
+				<% @my_advices.each do |advice| %>
+					<div id="advice-block" style="margin-bottom:10px">
+						<div class='pull-left'>
+							<%= g(advice.user, 'img-rounded', size:64) %>
+						</div>
+	
+						<div style="margin-left:80px">
+							<small class="pull-right" style="color:gray"> <%= distance_of_time_in_words(Time.now, advice.created_at) %> ago </small>
+							<p> <%= advice.name %> </p>
+						</div>
+					
+						<div class="clearfix"></div>
+						<hr />
+					</div>
+				<% end %>
+			<% else %>
+				No problem.
+			<% end %>
+		</div>
+	</div>
+
+	<div class="span3">
+		<p class="lead"> Help them! </p>
+		<hr />
+
+		<div id="users-block">
+			<% @users.each do |user| %>
+				<div style="margin-top:10px;">
+					<div class='pull-left'>
+						<%= g(user, 'img-circle', size:96) %>
+					</div>
+
+					<div style="margin-left:100px;margin-top:30px">
+						<small> <%= link_to user.email, user %> </small>
+						<div style="margin-top:20px">
+							<blockquote style="font-size:10px;font-weight:bold">
+								<% if user.advices.last %>
+									<%= user.advices.last.name %>
+								<% else %>
+									No problem.
+								<% end %>
+							</blockquote>
+						</div>
+					</div>
+
+					<div class='clearfix'></div>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>
